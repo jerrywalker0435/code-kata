@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/apple-filter/apple-filter.iml" filepath="$PROJECT_DIR$/apple-filter/apple-filter.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/code-kata.iml" filepath="$PROJECT_DIR$/.idea/code-kata.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gilded-rose/gilded-rose.iml" filepath="$PROJECT_DIR$/gilded-rose/gilded-rose.iml" />
     </modules>
   </component>
 </project>
