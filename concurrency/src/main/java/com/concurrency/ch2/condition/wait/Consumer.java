@@ -1,4 +1,4 @@
-package com.concurrency.ch2.condition;
+package com.concurrency.ch2.condition.wait;
 
 /**
  * @author zhangyu201
