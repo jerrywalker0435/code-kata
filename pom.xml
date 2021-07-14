@@ -12,6 +12,7 @@
         <module>apple-filter</module>
         <module>algo</module>
         <module>concurrency</module>
+        <module>refactoring</module>
     </modules>
 
 
