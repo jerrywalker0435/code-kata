@@ -168,28 +168,82 @@ public class CodeSmell {
      -- Rename Method
 
      Temporary Field
-        Sometimes you see an object in which an instance variable is set only in certain circumstances.
-     Such code is difficult to understand,because you expect an object to need all of its variables.
-     Trying to understand why a variable is there when it doesn't seem to be used can drive you nuts.
-     1. Use Extract Class to create a home for the poor orphan variables.Put all the code that concerns
-     the variables into the component.
+        Sometimes you see an object in which an instance variable is set only in certain circumstances.Such code is difficult to understand,
+     because you expect an object to need all of its variables.Trying to understand why a variable is there when it doesn't seem to be used
+     can drive you nuts.
+     1. Use Extract Class to create a home for the poor orphan variables.Put all the code that concerns the variables into the component.
      -- Extract Class
-     2. You may also be able to eliminate conditional code by using Introduce Null Object to create an
-     alternative component for when the variables aren't valid.
+     2. You may also be able to eliminate conditional code by using Introduce Null Object to create an alternative component for when the variables
+     aren't valid.
      -- Introduce Null Object
-
+     3. A common case of temporary field occurs when a complicated algorithm needs several variables.Because the implementer didn't want to
+     pass around a huge parameter list,he put them in fields.But the fields are valid only during the algorithm;in other contexts they are just
+     pain confusing.In this case you can use Extract Class with these variables and the methods that require them. The new object is a method object.
+     -- Extract Class
 
      Message Chains
+        You see message chains when a client asks one object for another, which the client then asks for yet another object, which the client then
+     asks another object and so on. You may see these as a long line of getThis methods, or as a sequence of temps. Navigating this way means the
+     client is coupled to the structure of the navigation. Any change to the intermediate relationships causes the client to have to change.
+     1. You can Hide Delegate at various points in the chain. In principle you can do this to every object in the chain, but doing this often turns
+     every intermediate object into a Middle Man.
+     -- Hide Delegate
+     2. Often a better alternative is to see what the resulting object is used for. See whether you can use Extract Method to take a piece of the code
+     that uses it and then Move Method to push it down the chain. If several clients of one of the objects in the chain want to navigate the rest of
+     the way, add a method to do that.
+     -- Extract Method --> Move Method
 
      Middle Man
+        One of the prime features of objects is encapsulation--hiding internal detail from the rest of the world. Encapsulation often comes with delegation.
+     However,this can go too far. You look at a class's interface and find half the method are delegating to this other class.
+     1. Use Remove Middle Man and talk to the object that really knows what's going on.
+     -- Remove Middle Man
+     2. If only a few methods aren't doing much, use Inline Method to inline them to the caller.
+     -- Inline Method
+     3. If there is additional behavior, you can use Replace Delegation With Inheritance to turn the middle man into a subclass of the real object.
+     That allows you to extend behavior without chasing all that delegation.
+     -- Replace Delegation With Inheritance
 
      Inappropriate Intimacy
+        Sometimes classes become far too intimate and spend too much time delving in each other's private parts.
+     1. Use Move Method and Move Filed to separate the pieces to reduce the intimacy. See whether you can arrange a Change Bidirectional Association to Unidirectional
+     -- Move Method and Move Filed
+     -- Change Bidirectional Association to Unidirectional
+     2. If the classes do have common interests, use Extract Class to put the commonality in a safe place and make honest classes of them.
+     Or use Hide Delegate to let another class act as go-between.
+     -- Extract Class or Hide Delegate
+     3. Inheritance often can lead to over intimacy. Subclass always going to know more about their parents would like them to know. Apply Replace Delegation With Inheritance
+     -- Replace Delegation With Inheritance
 
      Alternative Classes With Different Interfaces
+        Use Rename Method on any methods that do the same thing but have different signatures for what they do. In these cases the classes
+     aren't yet doing enough. Keep using Move Method to move behavior to the classes until the protocols are the same. If you have to redundantly
+     move code to accomplish this, you may be able to use Extract Supper Class to atone.
+     -- Rename Method --> Move Method
+     -- Extract Supper Class
 
      Incomplete Library Class
+        Reuse is often touted as the purpose of objects. We think reuse is overrated(we just use).
+     1. If there are just a couple of methods that you wish the library class had, use Introduce Foreign Method.
+     -- Introduce Foreign Method
+     2. If there is a whole load of extra behavior, you need Introduce Local Extension
+     -- Introduce Local Extension
 
      Data Class
+        These are classes that have fields, getting and setting methods for the fields, and nothing else. Such classes are dumb data holders and
+     are almost certainly being manipulated in far too much detail by other classes.
+     1. If these classes have public fields. You should immediately apply Encapsulate Field before anyone notices.
+     -- Encapsulate Field
+     2. If you have collection fields, check to see whether they are properly encapsulated and apply Encapsulate Collection if they aren't.
+     -- Encapsulate Collection
+     3. Use Remove Setting Method on any field that should not be change.
+     -- Remove Setting Method
+     4. Look for where these getting and setting methods are used by other classes. Try to use Move Method to move behavior into the data class.
+     -- Move Method
+     5. If you can't move a whole method, use Extract Method to create a method that can be moved. After a while you can start using Hide Method
+     on the getters and setters.
+     -- Extract Method --> Hide Method
+
 
      Refused Bequest
 
