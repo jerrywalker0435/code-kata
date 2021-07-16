@@ -147,8 +147,53 @@ public class CodeSmell {
      If you Move Method and Move Field, the hierarchy on the referring class disappears.
      -- Move Method and Move Field
 
+     Lazy Class
+        Each class you create costs money to maintain and understand. A class that isn't doing enough to pay for itself should be eliminated.
+     1. If you have subclasses that aren't doing enough, try to use Collapse Hierarchy.
+     -- Collapse Hierarchy
+     2. Nearly useless components should be subjected to Inline Class
+     -- Inline Class
+
+     Speculative Generality
+        You get it when people say, "Oh,I think we need the ability to this kind of thing someday" and thus want all sorts of hooks and special
+     cases to handle things that aren't required.The result often is harder to understand and maintain.If all this machinery were being used, it
+     would be worth it.But if it isn't,it isn't.The machinery just gets in the way,so get rid of it.
+     1. If you have abstract classes that aren't doing much,use Collapse Hierarchy.
+     -- Collapse Hierarchy
+     2. Unnecessary delegation can be removed with Inline Class.
+     -- Inline Class
+     3. Methods with unused parameters should be subject to Remove Parameter.
+     -- Remove Parameter
+     4. Methods name with odd abstract names should be brought down to earth with Rename Method.
+     -- Rename Method
+
+     Temporary Field
+        Sometimes you see an object in which an instance variable is set only in certain circumstances.
+     Such code is difficult to understand,because you expect an object to need all of its variables.
+     Trying to understand why a variable is there when it doesn't seem to be used can drive you nuts.
+     1. Use Extract Class to create a home for the poor orphan variables.Put all the code that concerns
+     the variables into the component.
+     -- Extract Class
+     2. You may also be able to eliminate conditional code by using Introduce Null Object to create an
+     alternative component for when the variables aren't valid.
+     -- Introduce Null Object
 
 
+     Message Chains
+
+     Middle Man
+
+     Inappropriate Intimacy
+
+     Alternative Classes With Different Interfaces
+
+     Incomplete Library Class
+
+     Data Class
+
+     Refused Bequest
+
+     Comments
 
 
 
