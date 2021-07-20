@@ -9,7 +9,19 @@ public class CodeSmell {
 
     /**
      Duplicated Code
-     1. The same expression in two methods of the same class
+        Number one in the stink parade is duplicated code. If you see the same code structure in more than one place, you can be sure that
+     your program will be better if you find a way to unify them.
+        The simplest duplicated code problem is when you have the same expression in two methods of the same class. Then all you have to do
+     is Extract Method and invoke the code from both place.
+        Another common duplication problem is when you have the same expression in two sibling subclass. You can eliminate this duplication
+     by using Extract Method in both classes then Pull Up Filed. If the code is similar but not the same, you need to use Extract Method to
+     separate the similar bits from the different bits. You may then find you can use Form Template Method. If the methods do the same thing
+     with a different algorithm, you can choose the clearer of the two algorithms and use Substitute Algorithm.
+        If you have duplicated code int two unrelated classes, consider using Extract Class in one class and then use the new component in the
+     other. Another possibility is that the method really belongs only in one of the classes and should be invoked by the other class or that the
+     method belongs in a third class that should be referred to by both of the original classes. You have to decide where the method makes sense
+     and ensure it is there and nowhere else.
+     1. The same expression in two methods of the same class and invoke the code from both place.
      -- Extract Method
      2. The same expression in the sibling subclass
      -- Extract Method -> Pull Up Filed
@@ -17,9 +29,9 @@ public class CodeSmell {
      -- Extract Method -> Form Template Method
      4. Do the same thing with a different algorithm,choose the clearer one
      -- Substitute Algorithm
-     5. Have duplicated code in two unrelated classes. Extract Method in one class and
-        then use the new component in the other
-     -- Extract Method
+     5. If you have duplicated code int two unrelated classes, consider using Extract Class in one class(or third class)
+     and then use the new component in the other
+     -- Extract Class
 
      Long Method
         The real key making it easy to understand small method is good naming.
@@ -232,6 +244,7 @@ public class CodeSmell {
      Data Class
         These are classes that have fields, getting and setting methods for the fields, and nothing else. Such classes are dumb data holders and
      are almost certainly being manipulated in far too much detail by other classes.
+        Data classes are like children. They are okay as a starting point, but to participate as a grownup object, they need to take some responsibility.
      1. If these classes have public fields. You should immediately apply Encapsulate Field before anyone notices.
      -- Encapsulate Field
      2. If you have collection fields, check to see whether they are properly encapsulated and apply Encapsulate Collection if they aren't.
@@ -246,13 +259,35 @@ public class CodeSmell {
 
 
      Refused Bequest
+        Subclasses get to inherit the method and data from their parents. But what if they don't want or need what they given? They are given these
+     gifts and pick just a few to play with.
+     1. The traditional story is that the hierarchy is wrong. You need to create a new sibling class and use Push Down Method and Push Down Field to push all
+     the unused methods to the sibling.That way the parent holds only what is common. Often you'll hear advice that all superclasses should be abstract.
+        You will guess from our snide use of traditional that we aren't going to advice this, at least not all the time. We do subclassing to reuse a bit of
+     behavior all the time, and we find it a perfectly good way to doing business. There is a smell, we can't deny it, but usually it isn't strong smell. So
+     we say that if the refused bequest is causing confusion and problems, follow the traditional advice. However, don't feel you have to do it all the time.
+     Nine times out of ten this smell is too faint to be worth cleaning.
+     -- Push Down Method and Push Down Field
+     2. The Smell of refused bequest is much stronger if the subclass is reusing behavior but does not want to support the interface of the superclass. We don't
+     mind refusing implementations, but refusing interface gets us on our high horses. In this case, however, don't fiddle with the hierarchy; you want to gut
+     it by applying Replace Inheritance With Delegation
+     -- Replace Inheritance With Delegation
 
      Comments
-
-
-
-
-
+        Don't worry, we aren't saying that people shouldn't write comments. In our olfactory analogy, comments aren't a bad smell; indeed they are sweet smell.
+     The reason here is that comments often are used as a deodorant. It's surprising how often you look at thickly commented code and notice that the comments
+     are there because the code is bad.
+        Comments lead us to bad code that has all the rotten whiffs we've discussed in the rest of this chapter. Our first action is to remove the bad smell by
+     refactoring. When we're finished, we often find that the comments are superfluous.
+     1. If you need a comment to explain what a block of code does, try Extract Method.
+     -- Extract Method
+     2. If the method is already extracted but you still need a comment to explain what it does, use Rename Method.
+     -- Rename Method
+     3. If you need to state some rule about the required state of the system, use Introduce Assertion.
+     -- Introduce Assertion
+        When you feel the need to write a comment, first try to refactor the code so that any comment becomes superfluous.
+        A good time to use a comment is when you don't know what to do. In addition to describing what is going on, comments can indicated areas in which you aren't sure.
+     A comment is a good place to say why you did something. This kind of information helps future modifiers, especially forgetful ones.
 
      */
 
