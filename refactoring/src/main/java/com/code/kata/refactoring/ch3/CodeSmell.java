@@ -12,7 +12,7 @@ public class CodeSmell {
         The simplest duplicated code problem is when you have the same expression in two methods of the same class.
      Then all you have to do is Extract Method and invoke the code from both place.
         Another common duplication problem is when you have the same expression in two sibling subclass. You can
-     eliminate this duplication by using Extract Method in both classes then Pull Up Filed. If the code is similar but
+     eliminate this duplication by using Extract Method in both classes then Pull Up Method. If the code is similar but
      not the same, you need to use Extract Method to separate the similar bits from the different bits. You may then
      find you can use Form Template Method. If the methods do the same thing with a different algorithm, you can choose
      the clearer of the two algorithms and use Substitute Algorithm.
