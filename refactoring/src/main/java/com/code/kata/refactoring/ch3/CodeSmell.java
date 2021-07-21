@@ -21,6 +21,7 @@ public class CodeSmell {
      other. Another possibility is that the method really belongs only in one of the classes and should be invoked by the other class or that the
      method belongs in a third class that should be referred to by both of the original classes. You have to decide where the method makes sense
      and ensure it is there and nowhere else.
+
      1. The same expression in two methods of the same class and invoke the code from both place.
      -- Extract Method
      2. The same expression in the sibling subclass
@@ -34,11 +35,30 @@ public class CodeSmell {
      -- Extract Class
 
      Long Method
-        The real key making it easy to understand small method is good naming.
-     If you have a good name for the method you don't need to look at the body.
-        You should be much more aggressive about decomposing methods. Whenever we feel
-     the need to comment something,we write a method instead.
-        Name intention rather than how it does it.
+        The object programs that live best and longest are those with short methods. Programmers new to objects often feel that no computation
+     ever takes place, that object programs are endless sequences of delegation. When you have lived with such a program for few years, however,
+     you learn just how valuable all those little methods are. All of the payoffs of indirection-explanation,sharing,and choosing-are supported by
+     little methods.
+        Since the early days of programming people have realized that the longer a procedure is, the more difficult it is to understand. Older languages
+     carried an overhead in subroutine calls, which deterred people from small methods. Modern OO languages have pretty much eliminated that overhead for
+     in-process calls. There is still an overhead to the reader of the code because you have to switch context to see what subprocedure does. Development
+     environments that allow you to see two methods at once help to eliminate this step, but the real key to making it easy to understand small methods is
+     good naming. If you have a good name for a method you don't need to look at the body.
+        The net effect is that you should be much more aggressive about decomposing methods. A heuristic we follow is that whenever we feel the need to comment
+     something, we write a method instead. Such a method contains the code that was commented but is named after the intention of the code rather than how does
+     it. We may do this on a group of lines or on as little as a single line of code. We do this even if the method call is longer than the code it replaces, provided
+     the method name explain the purpose of the code. The key here is not method length but the semantic distance between what the method does and how it does it.
+        Ninety-nine percent of the time, all you have to do to shorten a method is Extract Method. Find parts of the method that seem to go nicely together and make
+     a new method.
+        If you have a method with lots of parameters and temporary variables, these elements get in the way of extracting methods. If you try to use Extract Method,
+     you end up passing so many of the parameters and temporary variables as parameters to the extracted method that the result is scarcely more readable than the original.
+     You can often use Replace Temp With Query to eliminate the temps. Long lists of parameters can be slimmed down with Introduce Parameter Object and Preserve Whole Object.
+        If you've tried that, and you still have too many temps and parameters, it's time to get out the heavy artillery: Replace Method With Method Object.
+        How do you identify the clumps of code to extract? A good technique is to look for comments. They often signal this kind of semantic distance. A block of code with
+     a comment that tells you what it is doing can be replaced by a method whose name is based on the comment. Even a single line is worth extracting if it needs explanation.
+        Conditional and loops also give signs for extractions. Use Decompose Conditional to deal with conditional expression. With loops, extract the loop and the code within
+     the loop into its own method.
+
      1. Shorten a method
      -- Extract Method
      2. Method with lots of parameters and temporary variables
@@ -51,9 +71,26 @@ public class CodeSmell {
      -- Extract Method
 
      Large Class
-        When a class is trying to do too much,it often shows up as too many instance variables.
-     When a class has too many instance variables,duplicated code cannot be far behind.
-     1. Sometimes a class does not use all of its instance variable all of the time.
+        When a class is trying to do too much,it often shows up as too many instance variables. When a class has too many instance variables,
+     duplicated code cannot be far behind.
+        You can Extract Class to bundle a number of the variables. Choose variables to go together in the component that makes sense for each.
+     For example, "depositAmount" and "depositCurrency" are likely to belong together in a component. More generally, common prefixes or suffixes
+     for some subset of the variables in a class suggest the opportunity for a component. If the component makes sense as a subclass, you'll find
+     Extract Subclass often is easier.
+        Sometimes a class dose not use all of its instance variables all of the time. If so, you may be able to Extract Class or Extract Subclass
+     many times.
+        As with a class with too many instance variables, a class with too much code is prime breeding group for duplicated code, chaos, and death.
+     The simplest solution is to eliminate redundancy in the class itself. If you have five hundred-line methods with lots of code in common, you
+     may be able to turn into five ten-line methods with another ten two-line methods extracted from the original.
+        As with a class with a huge wad of variables, the usual solution for a class with too much code is either to Extract Class or Extract Subclass.
+     A useful trick is to determine how clients use the class and to use Extract Interface for each of these uses. That my give you ideas on how you
+     can further break up the class.
+        If your large class is GUI class, you may need to move data and behavior to separate domain object. This may require keeping some duplicated data
+     in both places and keeping the data in sync. Duplicate Observed Data suggests how to do this. In this case, especially if you are using older Abstract
+     Window Toolkit(AWT) components, you might follow this by removing the GUI class and replacing it with Swing components.
+
+     1. . More generally, common prefixes or suffixes for some subset of the variables in a class suggest the opportunity for a component. If the component
+     makes sense as a subclass, you'll find Extract Subclass often is easier. Sometimes a class does not use all of its instance variable all of the time.
      -- Extract Class
      -- Extract SubClass
      2. A useful trick is to determine how clients use class and use Extract Interface for each of these uses.
@@ -64,15 +101,21 @@ public class CodeSmell {
 
 
      Long Parameter List
-        Pass in as parameters everything needed is better than global data,Global data is evil and usually painful.
-     But with objects you don't pass in everything the method needs,instead you pass enough so that method can get to
-     everything it needs.A lot of what a method needs is available on the method's host class.
-        Long parameter list are hard to understand,because the become inconsistent and difficult to use,and because you
-     are forever changing them as you need more data.
-        There is one important exception to making these changes.This is you explicitly do not want to create a dependency
-     from the called object to the large object.In those cases unpacking data and sending it along as parameters is reasonable,
-     but pay attention to the pain involved.If the parameter list is too long or changes too often,you need to rethink your
-     dependency structure.
+        In our early programming days we were taught to pass in as parameters everything needed by a routine. This was understandable
+     because the alternative was global data, and global data is evil and usually painful. Objects change this situation because if you
+     don't have something you need, you can always ask another object get it for you. Thus with objects you don't pass in everything the
+     method needs. Instead you pass enough so that the method can get to everything it needs. A lot of what a method needs is available
+     on the method's host class. In object-oriented programs parameter lists tend to be much smaller than in traditional programs.
+        This is good because long parameter list are hard to understand, because they become inconsistent and difficult to use, and because
+     you are forever changing them as you need more data. Most changes are removed by passing objects because you are much more likely to
+     need to make only a couple of requests to get a new piece of data.
+        Use Replace Parameter With Method when you can get the data in one parameter by making a request of an object you already know about.
+     This object might be a field or it might be another parameter. Use Preserve Whole Object to take a bunch of data gleaned from an object
+     and replace it with the object itself. If you have several data items with no logical object, use Introduce Parameter Object.
+        There is one important exception to making these changes. This is when you explicitly do not want to create a dependency form the called
+     object to the large object. In those cases unpacking data and sending it along as parameters is reasonable, but pay attention to the pain
+     involved. If the parameter list is too long or changes too often, you need to rethink your dependency structure.
+
      1. When you can get the data in one parameter by making request of an object you already know about.This object might
      be a filed or it might be another parameter.
      -- Replace Parameter With Method
@@ -82,19 +125,29 @@ public class CodeSmell {
      -- Introduce Parameter Object
 
      Divergent Change
-        We structure software to make change easier.When we make a change we want to be able to jump to a single clear point
-     in the system and make the change.
-        Divergent Change occurs when one class is commonly changed in different way for different reasons.
+        We structure software to make change easier. After all, software is meant to be soft. When we make a change we want to be able to jump to
+     a single clear point in the system and make the change. When you can't do this you are smelling one of two closely related pungencies.
+        Divergent change occurs when one class is commonly changed in different way for different reasons. If you look at a class and say, "Well, I
+     will have to change these three methods every time I get a new database; I have to change these four methods every time there is a new financial
+     instrument," you likely have a situation in which two objects are better than one. That way each object is changed only as a result of one kind
+     of change. Of course, you often discover this only after you've added a few databases or financial instruments. Any change to handle a variation
+     should change a single class, and all the typing in the new class should express the variation. To clean this up you identify everything that changes
+     for a particular cause and use Extract Class to put them all together.
+
      1. Any change to handle a variation should change a single class,and all the typing in the new class should express the variation.
      To clean this up you identity everything that changes for a particular cause and use Extract Class to put them all together.
      -- Extract Class
 
      Shotgun Surgery
-        Similar to Divergent Change but is the opposite.You whiff this when every time you make a kind of change, you have to make
-     a lot of little changes to a lot of different classes.When the changes are all over the place, they are hard to find,and it's
-     it's easy to miss an important change.
-        Divergent Change is one class that suffers many kinds of changes, and Shotgun Surgery is one change that alters many classes.
-     Ideally there is one-to-one link between common changes and classes.
+        Shotgun surgery is similar to divergent change but is the opposite.You whiff this when every time you make a kind of change, you have to make
+     a lot of little changes to a lot of different classes.When the changes are all over the place, they are hard to find,and it's easy to miss an
+     important change.
+        In this case you want to use Move Method and Move Field to put all the changes into a single class. If no current class looks like a good candidate,
+     create one. Often you can use Inline Class to bring a whole bunch of behavior together. You get a small does of divergent change, but you can easily
+     deal with that.
+        Divergent change is one class that suffers many kinds of changes, and shotgun surgery is one change that alters many classes. Either way you want to
+     arrange things so that, ideally there is one-to-one link between common changes and classes.
+
      1. Put all change to single class,If no current class looks lie a good candidate,create one.
      -- Move Method
      -- Move Filed
