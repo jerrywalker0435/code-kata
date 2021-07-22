@@ -46,5 +46,52 @@ public class CatalogOfRefactorings {
      8.15 Replace Type Code With State/Strategy(以State/Strategy取代类型码 184)
      8.16 Replace Subclass with Field(以字段取代子类 188)
 
+     Chapter 9. Simplifying Conditional Expression(简化条件表达式）
+     9.1 Self Decompose Conditional(分解条件表达式 192)
+     9.2 Consolidate Conditional Expression(合并条件表达式 194)
+     9.3 Consolidate Duplicate Conditional Fragments(合并重复的条件判断 196)
+     9.4 Remove Control Flag(移除控制标记 197)
+     9.5 Replace Nested Conditional With Guard Clauses(以卫语句取代嵌套条件表达式 201)
+     9.6 Replace Conditional With Polymorphism(以多态取代条件表达式 205)
+     9.7 Introduce Null Object(引入Null对象 209)
+     9.8 Introduce Assertion(引入断言 216)
+
+     Chapter 10. Making Method Calls Simpler(简化函数调用）
+     10.1 Rename Method(函数重命名 221)
+     10.2 Add Parameter(添加参数 222)
+     10.3 Remove Parameter(移除参数 223)
+     10.4 Separate Query From Modifier(将查询函数与修改函数分离 225)
+     10.5 Parameterize Method(令函数携带参数 228)
+     10.6 Replace Parameter With Explicit Methods(以明确函数取代参数 230)
+     10.7 Preserve Whole Object(保持对象完整 232)
+     10.8 Replace Parameter With Methods(以函数取代参数 235)
+     10.9 Introduce Parameter Object(引入参数对象 238)
+     10.10 Remove Setting Method(移除设值函数 242)
+     10.11 Hide Method(隐藏函数 245)
+     10.12 Replace Constructor With Factory Method(以工厂函数取代构造函数 246)
+     10.13 Encapsulate Downcast(封装向下转型 249)
+     10.14 Replace Error Code With Exception(以异常取代错误码 251)
+     10.15 Replace Exception With Test(以测试取代异常 255)
+
+     Chapter 11. Dealing With Generalization(处理概况关系）
+     11.1 Pull Up Field(字段上移 259)
+     11.2 Pull Up Method(函数上移 260)
+     11.3 Pull Up Constructor Body(构造函数本体上移 263)
+     11.4 Push Down Method(函数下移 266)
+     11.5 Push Down Field(字段下移 266)
+     11.6 Extract Subclass(提炼子类 267)
+     11.7 Extract Superclass(提炼超类 272)
+     11.8 Extract Interface(提炼接口 277)
+     11.9 Collapse Hierarchy(折叠继承体系 279)
+     11.10 Form Template Method(塑造模板方法 280)
+     11.11 Replace Inheritance With Delegation(以委托取代继承 287)
+     11.12 Replace Delegation With Inheritance(以继承取代委托 289)
+
+     Chapter 12. Big Refactorings(大型重构）
+     12.1 Tease Apart Inheritance(梳理并分解继承体系 294)
+     12.2 Convert Procedural Design To Objects(将过程化设计转化为对象设计 300)
+     12.3 Separate Domain From Presentation(将领域和显示分离 302)
+     12.4 Extract Hierarchy(提炼继承体系 306)
+
      */
 }
