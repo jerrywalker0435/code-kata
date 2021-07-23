@@ -1,4 +1,4 @@
-package com.code.kata.refactoring.ch6.composingMethods;
+package com.code.kata.refactoring.ch6.composingMethods.extractMethod;
 
 import java.util.List;
 
@@ -6,24 +6,22 @@ import java.util.List;
  * @author zhangyu201
  * @date 2021/7/21
  */
-public class Step3 {
+public class E1NoLocalVariable {
     private String name;
     private List<Order> orders;
 
-    public void printOwing(double previousAmount){
+    public void printOwing(double amount){
+        double outstanding = 0.0;
         printBanner();
-        //Inline variable
-        double outstanding = getOutstanding(previousAmount * 1.2);
-        printDetails(outstanding);
-    }
-    // Rename Field
-    private double getOutstanding(double outstanding) {
         for (Order order:  orders) {
              outstanding += order.getAmount();
         }
-        return outstanding;
+        printDetails(outstanding);
     }
 
+    /**
+       No Local Variable
+     */
     private void printDetails(double outstanding) {
         System.out.println("name:"+name);
         System.out.println("amount:"+outstanding);

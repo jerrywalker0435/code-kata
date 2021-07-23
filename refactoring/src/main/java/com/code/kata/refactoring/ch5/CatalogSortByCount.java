@@ -25,8 +25,8 @@ public class CatalogSortByCount {
      16. 1 Push Down Field(字段下移 266)
      17. 1 Form Template Method(塑造模板方法 280)
      18. 1 Substitute Algorithm(替换算法 113)
-     19. 1 Replace Temp With Query(以查询取代临时变量 97)
-     20. 1 Replace Method With Method Object(以函数对象取代函数 110)
+     19. 3 1 2 Replace Temp With Query(以查询取代临时变量 97)
+     20. 4 1 3Replace Method With Method Object(以函数对象取代函数 110)
      21. 1 Duplicate Observed Data(复制"被监视数据" 153)
      22. 1 Replace Data Value With Object(以对象取代数据值 141)
      23. 1 Replace Type Code With Class(以类取代类型码 176)
@@ -44,8 +44,8 @@ public class CatalogSortByCount {
      35. 1 Extract Interface(提炼接口 277)
      36. 1 Introduce Local Extension(引入本地扩展 133)
      37. 0 Introduce Explaining Variable(引入解释性变量 101)
-     38. 0 Split Temporary Variable(分解临时变量 104)
-     39. 0 Remove Assignments to Parameters(移除对参数的赋值 107)
+     38. 2 0 2 Split Temporary Variable(分解临时变量 104)
+     39. 1 0 1 Remove Assignments to Parameters(移除对参数的赋值 107)
      40. 0 Inline Temp(内联临时变量 96)
      41. 0 Self Encapsulate Field(自封装字段 138)
      42. 0 Change Value to Reference(将值对象改为引用对象 144)
@@ -62,7 +62,7 @@ public class CatalogSortByCount {
      53. 0 Replace Nested Conditional With Guard Clauses(以卫语句取代嵌套条件表达式 201)
      54. 0 Replace Conditional With Polymorphism(以多态取代条件表达式 205)
      55. 0 Add Parameter(添加参数 222)
-     56. 0 Separate Query From Modifier(将查询函数与修改函数分离 225)
+     56. 1 0 1 Separate Query From Modifier(将查询函数与修改函数分离 225)
      57. 0 Parameterize Method(令函数携带参数 228)
      58. 0 Replace Parameter With Methods(以函数取代参数 235)
      59. 0 Replace Constructor With Factory Method(以工厂函数取代构造函数 246)
@@ -80,5 +80,10 @@ public class CatalogSortByCount {
      71. 0 Separate Domain From Presentation(将领域和显示分离 302)
      72. 0 Extract Hierarchy(提炼继承体系 306)
 
+
+     Note:
+       fist number : total summary
+       second number: occurs in code smell
+       third number: occurs in catalog of refactoring
      */
 }

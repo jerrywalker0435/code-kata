@@ -1,4 +1,4 @@
-package com.code.kata.refactoring.ch6.composingMethods;
+package com.code.kata.refactoring.ch6.composingMethods.extractMethod;
 
 /**
  * @author zhangyu201
