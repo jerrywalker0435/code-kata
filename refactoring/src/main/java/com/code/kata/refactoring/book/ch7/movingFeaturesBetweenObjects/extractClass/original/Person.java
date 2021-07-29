@@ -6,6 +6,7 @@ package com.code.kata.refactoring.book.ch7.movingFeaturesBetweenObjects.extractC
  */
 public class Person {
     /**
+     * Extract Class
      * You have one class doing work that should be done by two.
      * Create a new class and move the relevant fields and methods form the old class into the new class.
      *
