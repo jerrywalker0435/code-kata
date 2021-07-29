@@ -1,4 +1,4 @@
-package com.code.kata.refactoring.book.ch7.movingFeaturesBetweenObjects.removeMiddleMan.original;
+package com.code.kata.refactoring.book.ch7.movingFeaturesBetweenObjects.removeMiddleMan.after;
 
 /**
  * @author zhangyu201
@@ -26,15 +26,13 @@ public class Person {
     public Department getDepartment() {
         return department;
     }
-    public Person getManager(){
-        return department.getManager();
-    }
+
     public void setDepartment(Department department) {
         this.department = department;
     }
 
     public static void main(String[] args) {
         Person john = new Person();
-        Person manager = john.getManager();
+        Person manager = john.getDepartment().getManager();
     }
 }
