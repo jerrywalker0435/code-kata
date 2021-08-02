@@ -116,7 +116,7 @@ public class CodeSmell {
 
 
      6.Shotgun Surgery
-        Shotgun surgery is similar to divergent change but is the opposite.You whiff this when every time you make a kind
+        Shotgun Surgery is similar to divergent change but is the opposite.You whiff this when every time you make a kind
      of change, you have to make a lot of little changes to a lot of different classes.When the changes are all over the
      place, they are hard to find,and it's easy to miss an important change.
         In this case you want to use Move Method(搬移函数 115) and Move Field(搬移字段 119) to put all the changes into a
