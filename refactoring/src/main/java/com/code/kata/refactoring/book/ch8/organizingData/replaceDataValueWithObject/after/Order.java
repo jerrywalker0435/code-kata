@@ -1,4 +1,4 @@
-package com.code.kata.refactoring.book.ch8.organizingData.replaceDataValue.original;
+package com.code.kata.refactoring.book.ch8.organizingData.replaceDataValueWithObject.after;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -15,22 +15,24 @@ import java.util.Iterator;
  * duplication and feature envy.When the smell begins,turn the data value into an object.
  */
 public class Order {
-    private String customer;
+    private Customer customer;
 
-    public String getCustomer() {
-        return customer;
+    public Order(String customer) {
+        this.customer= new Customer(customer);
     }
 
-    public void setCustomer(String customer) {
-        this.customer = customer;
+    public String getCustomerName() {
+        return customer.getName();
     }
+
+
 
     private static int numberOfOrdersFor(Collection orders,String customer){
         int result = 0 ;
         Iterator iter = orders.iterator();
         while (iter.hasNext()){
             Order each =(Order) iter.next();
-            if (each.getCustomer().equals(customer)) {
+            if (each.getCustomerName().equals(customer)) {
                 result++;
             }
         }

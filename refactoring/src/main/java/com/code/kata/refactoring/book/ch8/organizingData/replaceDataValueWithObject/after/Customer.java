@@ -1,4 +1,4 @@
-package com.code.kata.refactoring.book.ch8.organizingData.replaceDataValue.after;
+package com.code.kata.refactoring.book.ch8.organizingData.replaceDataValueWithObject.after;
 
 public class Customer {
     private String name;
