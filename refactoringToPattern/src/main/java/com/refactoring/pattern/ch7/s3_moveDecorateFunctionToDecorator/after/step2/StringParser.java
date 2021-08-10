@@ -10,6 +10,6 @@ public class StringParser {
     private String textBegin;
 
     public Node find(NodeReader reader, String input, int position, boolean balance_quotes){
-        return new StringNode(textBuffer,textBegin,reader.getParser().shouldDecodeNodes());
+        return StringNode.createStringNode(textBuffer,textBegin,reader.getParser().shouldDecodeNodes());
     }
 }
